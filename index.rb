@@ -5,7 +5,9 @@ ActiveRecord::Base.logger = nil
 class CLI
 
     def initialize
-        self.store_selection()
+        #self.price_of_shoes
+        self.browse_by
+        #self.store_selection()
     end
 
     def store_selection
@@ -20,19 +22,17 @@ class CLI
         else
             puts ''
             puts "Great"
-            self.brand_selection()
+            self.brand_selection_by_store()
         end
     end
 
-    def brand_selection
+    def brand_selection_by_store
         puts ''
         puts "What brand of shoes, are you looking for?"
         @user_choice = gets.chomp()
         @user_brand_choice = Brand.find_by({brand_name: @user_choice})
         @shoe_results = Shoe.where({ store_id: @user_store_selection.id, brand_id: @user_brand_choice.id})
-    #"Adidas"
         if !Brand.all.include? @user_brand_choice
-        #if @user_brand_choice.length == 0
             puts ''
             puts "Sorry that brand is not available at this moment."
             return self.brand_selection()
@@ -40,34 +40,74 @@ class CLI
             puts ''
             puts "Great"
             return print_shoes()
-            #found_shoes = Shoe.where({brand_id: user_brand_choice.id})
+            
         end
     end
-    #if found_id = Brand.where({brand_name: user_brand_choice})
-    #return Shoe.find_all({brand_id: found_id })
-    
 
     def print_shoes
-        #shoes = []
         puts ''
         puts "This are all the shoes we have available"
-        # Brand.find_by({brand_name: @user_choice})
-        #Shoe.all.each do |shoe|
-            #if shoe.store_id == @user_store_selection.id && shoe.brand_id == @user_brand_choice.id
-            #if @user_store_selection.id == shoe.store_id && @user_brand_choice.id == shoe.brand_id
-             #   shoes << shoe 
-                #@user_brand_choice.shoes
-            if @shoe_results.length == 0
-                puts "There are no shoes of that brand at this location."
-                return print_shoes()
-            else
-                puts "These are all the shoes of that brand this location has."
+        if @shoe_results.length == 0
+            puts "There are no shoes of that brand at this location."
+            return brand_selection()
+        else
+            puts "These are all the shoes of that brand this location has."
+            @shoe_results.each do |shoe|
+                puts "#{shoe.shoe_name}, $#{shoe.price}"
             end
-        #end
-        # binding.pry
-        p @shoe_results
+        end
     end
 
+    def browse_by_brand
+        puts ''
+        puts "What brand of shoes would you like to browse by?"
+        @user_brand_choice =  gets.chomp()
+        @shoe_brand = Brand.find_by({brand_name: @user_brand_choice})
+        @shoe_by_store =  Shoe.where(brand_id: @shoe_brand.id).order({store_id: :desc})
+        Store.all.each do |store|
+            @shoe_by_store.each do |shoe|
+                if shoe.store_id == store.id 
+                    puts "#{store.store_name}:"
+                    puts "#{shoe.shoe_name}, $#{shoe.price}"
+                end
+            end 
+        end
+
+    end
+
+    def price_of_shoes
+        puts ''
+        puts "What is your budget?"
+        @user_budget = gets.chomp()
+        @shoe_budget = Shoe.where("price < #{@user_budget.to_i}").order({price: :desc})
+        @shoe_budget.each do |shoe|
+            puts "#{shoe.shoe_name}, $#{shoe.price}"
+            #puts shoe.price
+        end
+    end
+
+    def browse_by
+        arr_methods = ["Store Name", "Brand", "Price", "Shoe Name", "Size"]
+        i = 1
+        puts ""
+        puts "Please select a number for browsing options"
+        arr_methods.each do | method |
+            puts "#{i}) #{method}"
+            i = i + 1
+        end
+        @selected_method_number = gets.chomp()
+        if @selected_method_number.to_i == 1
+            self.store_selection()
+        elsif @selected_method_number.to_i == 2
+            self.browse_by_brand()
+        elsif @selected_method_number.to_i == 3
+            self.price_of_shoes()
+        end
+    end
+
+
+
 end
+
 
 CLI.new()

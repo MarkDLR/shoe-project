@@ -20,3 +20,9 @@ Models:
 - brands
 
 Models (stretch goal)
+
+select method to go to
+- 1 store location
+- 2 brand
+- 3 price
+- 4 

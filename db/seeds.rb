@@ -21,7 +21,7 @@ Brand.create(brand_name: "Under Armour")
 Brand.create(brand_name: "New Balance")
 Brand.create(brand_name: "Skechers") #37
 
-light_race = Shoe.create(shoe_name:"light racer", shoe_color: "red", size: 11, price: 60, brand_id: 1, store_id: 1)
+light_race = Shoe.create(shoe_name:"light racer", shoe_color: "red", size: 11, price: 60, brand_id: 30, store_id: 15)
 
 20.times do 
     Shoe.create({
