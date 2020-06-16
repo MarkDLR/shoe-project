@@ -26,3 +26,7 @@ select method to go to
 - 2 brand
 - 3 price
 - 4 
+
+
+
+fix to where if there are no shoes in store we return to store selection
