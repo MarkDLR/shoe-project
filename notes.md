@@ -13,6 +13,7 @@ Stretch Goal
 - User opens app and can select brand(It displays list of stores that have that brand of shoes)
 - User opens app and can select shoes by attribute(size, color, price)
 - User opens app and can select location to be taken to store ("Galleria")
+- User has: size, credit card, email, etc. 
 
 Models:
 - shoes
@@ -30,3 +31,4 @@ select method to go to
 
 
 fix to where if there are no shoes in store we return to store selection
+
