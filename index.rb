@@ -146,7 +146,7 @@ class CLI
             puts ""
             puts ("Great, this brand has amazing shoes!").green
             self.brand_browse_results()
-        elsif
+        else
             puts ""
             puts ("Sorry that brand is not in our database").red.on_black
             self.browse_by_brand()
