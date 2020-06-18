@@ -34,16 +34,19 @@ class CLI
     end
 
     def exit
+        puts ""
         puts "Thank you for shopping with us! Please come again".green.on_black.underline
     end
 
     def user_sign_up
         puts ''
-        puts "Please create a username to sign up".green
+        puts "Please create a username to sign up".green.on_black.underline
         @current_username = gets.chomp() 
         @username = User.all.find_by(user_name: @current_username)
         if @current_username == "exit" || @current_username == "Exit"
             self.exit()
+        elsif @current_username == "return" || @current_username == "Return"
+            self.user_welcome()
         elsif User.all.include? @username
             puts "Sorry, this username already exist".red.on_black
             self.user_sign_up()
@@ -61,6 +64,8 @@ class CLI
         @current_username = gets.chomp()
         if @current_username == "exit" || @current_username == "Exit"
             self.exit()
+        elsif @current_username == "return" || @current_username == "Return"
+            self.user_welcome()
         elsif User.find_by(user_name: @current_username)
             self.browse_by()
         else
