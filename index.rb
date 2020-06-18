@@ -9,6 +9,7 @@ class CLI
     end
 
     def user_welcome
+        @current_username = nil
         puts ''
         puts "Welcome to Shoe Dog! Please select a number:".green.on_black.underline
         puts "1) Login".light_blue
@@ -41,6 +42,7 @@ class CLI
     def user_sign_up
         puts ''
         puts "Please create a username to sign up".green.on_black.underline
+        @current_username = nil
         @current_username = gets.chomp() 
         @username = User.all.find_by(user_name: @current_username)
         if @current_username == "exit" || @current_username == "Exit"
@@ -61,6 +63,7 @@ class CLI
     def user_login
         puts ''
         puts "Please provide your username".green.on_black.underline
+        @current_username = nil
         @current_username = gets.chomp()
         if @current_username == "exit" || @current_username == "Exit"
             self.exit()
